@@ -76,8 +76,11 @@ fun PrintButton() {
             onClick = {
                 if (!isPrinting) {
                     isPrinting = true
-                    printFactura(context, impresoraNameState.value)
-                    isPrinting = false
+                    // Ejecutar la impresión en un hilo secundario
+                    Thread {
+                        printFactura(context, impresoraNameState.value)
+                        isPrinting = false
+                    }.start()
                 }
             },
             modifier = Modifier.padding(16.dp)
